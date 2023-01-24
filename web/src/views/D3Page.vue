@@ -4,6 +4,8 @@
   * @Email: fred.zhen@gmail.com
 -->
 <script lang="ts" setup>
+import Area from "../components/Area.vue";
+
 
 </script>
 
@@ -12,6 +14,7 @@
     <div id="canvas">
       here you put D3
     </div>
+    <Area />
   </div>
 
 </template>
