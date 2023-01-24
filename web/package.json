@@ -12,8 +12,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
+    "bulma": "^0.9.4",
+    "pinia": "^2.0.29",
     "typescript": "^4.5.4",
     "vite": "^2.9.9",
+    "vue-router": "^4.1.6",
     "vue-tsc": "^0.34.7"
   }
 }
