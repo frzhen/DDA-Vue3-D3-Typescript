@@ -6,3 +6,9 @@ DDA-Vue3-D3-Typescript
 ##### directories:
 - [web: frontend web app project with vue3, typescript and D3](./web/web.md)
 - [service: backend project with python FastAPI and MongoDB](./service/service.md)
+
+### Branches:
+- `main`: working code branch
+- `dev`: current development branch
+- `pure-web`: working code branch without backend which data is stored within the project
+> A fully working project will have have the data stored in mongoDB, accessible through API built with the python FastAPI framework. All code is only worked in local environment so far.
