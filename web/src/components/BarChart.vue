@@ -6,6 +6,9 @@
 <script lang="ts" setup>
 import * as d3 from 'd3';
 import { onMounted } from "vue";
+import { useMenu } from "../store/menu";
+
+const menuData = useMenu();
 
 onMounted(() => {
   const svg = d3.select('#canvas')
@@ -13,7 +16,6 @@ onMounted(() => {
     .attr('width', 600)
     .attr('height', 600);
 
-  // create marges and dimensions
   const margin = { top: 20, right: 20, bottom: 100, left: 100 };
   const graphWidth = 600 - margin.left - margin.right;
   const graphHeight = 600 - margin.top - margin.bottom;
@@ -27,7 +29,7 @@ onMounted(() => {
     .attr('transform', `translate(0, ${graphHeight})`);
   const yAxisGroup = graph.append('g');
 
-  d3.json("src/json/menu.json").then((data: any) => {
+  menuData.fetchMenuData().then((data: any) => {
 
     const min: number  = <number>(d3.min(data, (d: any) => d.orders) as unknown);
     const max: number  = <number>( d3.max(data, (d: any) => d.orders) as unknown);

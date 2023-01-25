@@ -41,12 +41,16 @@ class DishesModel(BaseModel):
             }
         }
 
+class ResponseDishModel(BaseModel):
+    name: str = Field(...)
+    orders: int = Field(...)
 
-@app.get('/dishes', response_model=List[DishesModel])
+@app.get('/dishes', response_model=List[ResponseDishModel])
 async def get_all_dishes():
     dish_list = []
     cursor = d3.dishes.find()
     async for dish in cursor:
-        dish_list.append(dish)
+        menu_item = { 'name': dish['name'], 'orders': dish['orders']}
+        dish_list.append(menu_item)
     return dish_list
 
