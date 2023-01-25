@@ -4,21 +4,19 @@
   * @Email: fred.zhen@gmail.com
 -->
 <script lang="ts" setup>
-import Area from "../components/Area.vue";
+import BarChart from "../components/BarChart.vue";
 
 
 </script>
 
 <template>
   <div class="box">
-    <div id="canvas">
-      here you put D3
+    <div class="columns">
+      <div class="column">
+        <BarChart />
+      </div>
     </div>
-    <Area />
   </div>
 
 </template>
 
-<style lang='scss' scoped>
-
-</style>
