@@ -46,18 +46,25 @@ export function createBarChart(){
       .data(data);
 
     rects.attr('width', x_scale.bandwidth)
-      .attr('height', (d: any) => graphHeight - y_scale(d.orders))
+      .attr('width', x_scale.bandwidth)
+      .attr('height', 0)
+      .attr('y', graphHeight)
       .attr('fill', 'orange')
       .attr('x', (d: any) => x_scale(d.name) as number)
-      .attr('y', (d: any) => y_scale(d.orders));
+      .transition().duration(1500) // transition
+      .attr('y', (d: any) => y_scale(d.orders))
+      .attr('height', (d: any) => graphHeight - y_scale(d.orders));
 
     rects.enter()
       .append('rect')
       .attr('width', x_scale.bandwidth)
-      .attr('height', (d: any) => graphHeight - y_scale(d.orders))
+      .attr('height', 0)
+      .attr('y', graphHeight)
       .attr('fill', 'orange')
       .attr('x', (d: any) => x_scale(d.name) as number)
-      .attr('y', (d: any) => y_scale(d.orders));
+      .transition().duration(1500) // transition
+      .attr('y', (d: any) => y_scale(d.orders))
+      .attr('height', (d: any) => graphHeight - y_scale(d.orders));
 
     // create and call the Axis
     const xAxis = d3.axisBottom(x_scale);
