@@ -25,21 +25,21 @@ class PyObjectId(ObjectId):
         field_schema.update(type="string")
 
 
-class DishesModel(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    name: str = Field(...)
-    orders: int = Field(...)
-
-    class Config:
-        allow_population_by_field_name = True
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
-        schema_extra = {
-            "example": {
-                "name": "veg soup",
-                "orders": 200
-            }
-        }
+# class DishesModel(BaseModel):
+#     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+#     name: str = Field(...)
+#     orders: int = Field(...)
+#
+#     class Config:
+#         allow_population_by_field_name = True
+#         arbitrary_types_allowed = True
+#         json_encoders = {ObjectId: str}
+#         schema_extra = {
+#             "example": {
+#                 "name": "veg soup",
+#                 "orders": 200
+#             }
+#         }
 
 class ResponseDishModel(BaseModel):
     name: str = Field(...)
