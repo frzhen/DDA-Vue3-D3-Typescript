@@ -15,6 +15,9 @@ import BarChart from "../components/BarChart.vue";
       <div class="column">
         <BarChart />
       </div>
+      <div class="column">
+
+      </div>
     </div>
   </div>
 

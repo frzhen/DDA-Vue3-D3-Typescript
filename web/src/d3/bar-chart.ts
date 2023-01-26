@@ -32,8 +32,7 @@ export function createBarChar(data: any) {
     .domain([min-20, max])
     .range([graphHeight, 0]); // reverse the y-axis and graph scale
 
-
-  // band scale
+  // band scales
   const x_scale = d3.scaleBand()
     .domain(data.map((item: { name: any }) => item.name))
     .range([0, 500])
@@ -45,18 +44,25 @@ export function createBarChar(data: any) {
     .data(data);
 
   rects.attr('width', x_scale.bandwidth)
-    .attr('height', (d: any) => graphHeight - y_scale(d.orders))
+    .attr('width', x_scale.bandwidth)
+    .attr('height', 0)
+    .attr('y', graphHeight)
     .attr('fill', 'orange')
     .attr('x', (d: any) => x_scale(d.name) as number)
-    .attr('y', (d: any) => y_scale(d.orders));
+    .transition().duration(1500) // transition
+    .attr('y', (d: any) => y_scale(d.orders))
+    .attr('height', (d: any) => graphHeight - y_scale(d.orders));
 
   rects.enter()
     .append('rect')
     .attr('width', x_scale.bandwidth)
-    .attr('height', (d: any) => graphHeight - y_scale(d.orders))
+    .attr('height', 0)
+    .attr('y', graphHeight)
     .attr('fill', 'orange')
     .attr('x', (d: any) => x_scale(d.name) as number)
-    .attr('y', (d: any) => y_scale(d.orders));
+    .transition().duration(1500) // transition
+    .attr('y', (d: any) => y_scale(d.orders))
+    .attr('height', (d: any) => graphHeight - y_scale(d.orders));
 
   // create and call the Axis
   const xAxis = d3.axisBottom(x_scale);
@@ -71,4 +77,7 @@ export function createBarChar(data: any) {
     .attr('text-anchor', 'end')
     .attr('transform', 'rotate(-40)')
     .attr('fill', 'orange');
+
+  // remove exit selection
+  // rects.exit().remove();
 }
