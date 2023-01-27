@@ -6,7 +6,7 @@
 import * as d3 from "d3";
 
 export function createBarChar(data: any) {
-  const svg = d3.select('#canvas')
+  const svg = d3.select('#barChart')
     .append('svg')
     .attr('width', 600)
     .attr('height', 600);

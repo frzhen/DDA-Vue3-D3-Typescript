@@ -5,6 +5,7 @@
 -->
 <script lang="ts" setup>
 import BarChart from "../components/BarChart.vue";
+import DonutChart from "../components/DonutChart.vue";
 
 
 </script>
@@ -16,7 +17,7 @@ import BarChart from "../components/BarChart.vue";
         <BarChart />
       </div>
       <div class="column">
-
+        <DonutChart />
       </div>
     </div>
   </div>

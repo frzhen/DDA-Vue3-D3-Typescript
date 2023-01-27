@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="canvas">
-  </div>
+  <div id="barChart">
+</div>
 </template>
 
