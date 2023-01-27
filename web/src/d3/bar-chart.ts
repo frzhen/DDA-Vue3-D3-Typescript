@@ -5,6 +5,10 @@
  */
 import * as d3 from "d3";
 
+const barColor = '#FC8C3C';
+const highlightColor = '#41D0F0';
+const textColor = '#323D5E';
+const orderLabelColor = "#28AE60";
 export function createBarChar(data: any) {
   const svg = d3.select('#barChart')
     .append('svg')
@@ -47,7 +51,8 @@ export function createBarChar(data: any) {
     .attr('width', x_scale.bandwidth)
     .attr('height', 0)
     .attr('y', graphHeight)
-    .attr('fill', 'orange')
+    .attr('fill', `${barColor}`)
+    .attr('fill-opacity', 0.7)
     .attr('x', (d: any) => x_scale(d.name) as number)
     .transition().duration(1500) // transition
     .attr('y', (d: any) => y_scale(d.orders))
@@ -58,7 +63,8 @@ export function createBarChar(data: any) {
     .attr('width', x_scale.bandwidth)
     .attr('height', 0)
     .attr('y', graphHeight)
-    .attr('fill', 'orange')
+    .attr('fill', barColor)
+    .attr('fill-opacity', 0.7)
     .attr('x', (d: any) => x_scale(d.name) as number)
     .transition().duration(1500) // transition
     .attr('y', (d: any) => y_scale(d.orders))
@@ -76,8 +82,48 @@ export function createBarChar(data: any) {
   xAxisGroup.selectAll('text')
     .attr('text-anchor', 'end')
     .attr('transform', 'rotate(-40)')
-    .attr('fill', 'orange');
+    .attr('fill', textColor)
+    .style('font-size', 14);
+
+  yAxisGroup.selectAll('text')
+    .attr('fill', textColor)
+    .style('font-size', 14);
 
   // remove exit selection
   // rects.exit().remove();
+
+  // event handlers
+  const handleMouseOver: any = (d: any) => {
+    d3.select(d.srcElement)
+      .attr('fill', highlightColor);
+  }
+
+  const handleMouseOut: any = (d: any) => {
+    d3.select(d.srcElement)
+      .attr('fill', barColor);
+  }
+
+  const handleClick: any = (d: any) => {
+    svg.append('text')
+      .text(`${d.srcElement.__data__.orders}`)
+      .attr('class', 'orders')
+      .attr('y', parseFloat(d.srcElement.attributes.y.value) + margin.top - 5)
+      .attr('x', (parseFloat(d.srcElement.attributes.x.value) + margin.left +
+          parseFloat(d.srcElement.attributes.width.value) / 2))
+      .attr('text-anchor', 'middle')
+      .style('fill', orderLabelColor)
+      .style('font-size', 16)
+      .on('click', handleLabel);
+  }
+
+  const handleLabel: any = (d: any) => {
+    d3.select(d.srcElement).remove();
+  }
+
+  // add events
+  graph.selectAll('rect')
+    .on('mouseover', handleMouseOver)
+    .on('mouseout', handleMouseOut)
+    .on('click', handleClick);
+
 }
