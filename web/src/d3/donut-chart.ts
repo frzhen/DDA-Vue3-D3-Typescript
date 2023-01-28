@@ -4,8 +4,6 @@
  * @Email: fred.zhen@gmail.com
  */
 import * as d3 from "d3";
-import {arc} from "d3";
-import sharedWorkerConstructor from "*?sharedworker";
 
 
 export function createDonutChart(data: any) {
@@ -21,6 +19,7 @@ export function createDonutChart(data: any) {
     y: (dims.height /2 + 80 )
   };
 
+  const transition_interval = 1500;
   const svg = d3.select('#donutChart')
     .append('svg')
     .attr('width', dims.width + 150)
@@ -29,15 +28,6 @@ export function createDonutChart(data: any) {
   const graph = svg.append('g')
     .attr('transform', `translate(${cent.x}, ${cent.y})`);
 
-  const pie = d3.pie()
-    .sort(null)
-    .value((d: any) => d.amount);
-
-  const arcPath: any = d3.arc()
-    .outerRadius(dims.radius)
-    .innerRadius(dims.radius - 50);
-
-  // custom color pattern
   const colorRange = [
     '#6668aa',
     '#323D5E',
@@ -50,6 +40,17 @@ export function createDonutChart(data: any) {
   ]
   const arcColor = d3.scaleOrdinal(colorRange)
     .domain(data.map((d: any) => d.name));
+
+  const pie = d3.pie()
+    .sort(null)
+    .value((d: any) => d.amount);
+
+  const arcPath: any = d3.arc()
+    .outerRadius(dims.radius)
+    .innerRadius(dims.radius - 50);
+
+  // custom color pattern
+
 
   // custom tween for transition
   const arcTweenEnter: any = (d: any) => {
@@ -68,22 +69,15 @@ export function createDonutChart(data: any) {
       return arcPath(d);
     }
   }
-  // use function keyword  to allow use of 'this'
-  // function  arcTweenUpdate(d: any) {
-  //   let i = d3.interpolate(this._current, d);
-  //   this._current = i(1);
-  //   return function(ticker: any) {
-  //     return arcPath(i(ticker));
-  // }
 
   const paths = graph.selectAll('path').data(pie(data));
 
   paths.exit()
-    .transition().duration(1500)
+    .transition().duration(transition_interval)
     .attrTween('d', arcTweenExit)
     .remove();
 
-  paths.transition().duration(1500)
+  paths.transition().duration(transition_interval)
     .attrTween('d', arcTweenEnter);
 
   paths.enter()
@@ -92,7 +86,94 @@ export function createDonutChart(data: any) {
     .attr('stroke-width', 0)
     .attr('fill', (d: any)=> arcColor(d.data.name))
     .attr('fill-opacity', 0.7)
-    .transition().duration(1500)
-    .attrTween('d', arcTweenEnter);
+    .transition().duration(transition_interval)
+    .attrTween('d', arcTweenEnter)
+    .attr('class', 'donut-slice');
+
+  // add annotation to the donut chart after pie rendering
+  setTimeout(() => {
+
+    const annGroup = svg.append('g')
+      .attr('transform', `translate(${cent.x}, ${cent.y})`);
+    const annotations = annGroup.selectAll('.donut-slice').data(pie(data));
+
+    const annotation_offset = 60;
+    const horizontal_line_length = 40;
+    const annotation_connector_offset = 55;
+    const annColor = '#F98E6E';
+
+    const annotationDraws = annotations.enter();
+
+    annotationDraws
+      .append('text')
+      .text((d: any) => `${d.data.name}: ${d.data.amount}`)
+      .attr("transform", (d: any) => {
+        const centroid = arcPath.centroid(d);
+        if (centroid[0] > 0) {
+          centroid[0] += annotation_offset
+        } else if (centroid[0] < 0) {
+          centroid[0] -= annotation_offset
+        }
+        if (centroid[1] > 0) {
+          centroid[1] += annotation_offset
+        } else if (centroid[1] < 0) {
+          centroid[1] -= annotation_offset
+        }
+        return `translate(${centroid})`
+      })
+      .style('text-anchor', 'middle')
+      .style('font-size', 14);
+
+    // draw horizontal lines of annotation lines
+    annotationDraws
+      .append('line')
+      .style("stroke", `${annColor}`)
+      .style("stroke-width", 1)
+      .attr("x1", (d: any) => arcPath.centroid(d)[0])
+      .attr("y1", (d: any) => arcPath.centroid(d)[1])
+      .attr("x2", (d: any) => {
+        let current_x = arcPath.centroid(d)[0];
+        if (current_x > 0) {
+          current_x += horizontal_line_length;
+        } else if (current_x < 0) {
+          current_x -= horizontal_line_length;
+        }
+        return  current_x;
+      })
+      .attr("y2", (d: any) => arcPath.centroid(d)[1]);
+    // draw connectors
+    annotations.enter()
+      .append('line')
+      .style("stroke", `${annColor}`)
+      .style("stroke-width", 1)
+      .attr("x1", (d: any) => {
+        let current_x = arcPath.centroid(d)[0];
+        if (current_x > 0) {
+          current_x += horizontal_line_length;
+        } else if (current_x < 0) {
+          current_x -= horizontal_line_length;
+        }
+        return  current_x;
+      })
+      .attr("y1", (d: any) => arcPath.centroid(d)[1])
+      .attr("x2", (d: any) => {
+        let current_x = arcPath.centroid(d)[0];
+        if (current_x > 0) {
+          current_x += annotation_connector_offset;
+        } else if (current_x < 0) {
+          current_x -= annotation_connector_offset;
+        }
+        return  current_x;
+      })
+      .attr("y2", (d: any) => {
+        let current_y = arcPath.centroid(d)[1];
+        if (current_y > 0) {
+          current_y = current_y + annotation_connector_offset - 10;
+        } else if (current_y < 0) {
+          current_y -= annotation_connector_offset}
+        return  current_y;
+      });
+  }, transition_interval);
+
 
 }

@@ -16,6 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <h3>Monthly Budget Donut Chart</h3>
   <div id="donutChart">
   </div>
 </template>
