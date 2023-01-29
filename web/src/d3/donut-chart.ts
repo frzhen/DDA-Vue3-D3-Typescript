@@ -5,12 +5,14 @@
  */
 import * as d3 from "d3";
 
+// event handlerS
+
 
 export function createDonutChart(data: any) {
 
   const dims = {
-    height: 300,
-    width: 300,
+    height: 400,
+    width: 400,
     radius: 150
   };
 
@@ -49,8 +51,21 @@ export function createDonutChart(data: any) {
     .outerRadius(dims.radius)
     .innerRadius(dims.radius - 50);
 
-  // custom color pattern
+  const handleMouseOver: any = (d: any) => {
+    d3.select(d.srcElement)
+      .transition('changeSliceFill').duration(500)
+      .attr('fill', '#000')
+      .attr('stroke', '#41D0F0')
+      .attr('stroke-width', 3);
+  }
 
+  const handleMouseOut: any = (d: any) => {
+    d3.select(d.srcElement)
+      .transition('changeSliceFill').duration(500)
+      .attr('fill', colorRange[d.srcElement.__data__.index])
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 0);
+  }
 
   // custom tween for transition
   const arcTweenEnter: any = (d: any) => {
@@ -90,20 +105,24 @@ export function createDonutChart(data: any) {
     .attrTween('d', arcTweenEnter)
     .attr('class', 'donut-slice');
 
-  // add annotation to the donut chart after pie rendering
-  setTimeout(() => {
+  // add events
+  graph.selectAll('path')
+    .on('mouseover', handleMouseOver)
+    .on('mouseout', handleMouseOut);
 
-    const annGroup = svg.append('g')
-      .attr('transform', `translate(${cent.x}, ${cent.y})`);
-    const annotations = annGroup.selectAll('.donut-slice').data(pie(data));
+  const annotation_offset = 80;
+  const horizontal_line_length = 50;
+  const annotation_connector_offset = annotation_offset - 5;
+  const annColor = '#F98E6E';
 
-    const annotation_offset = 60;
-    const horizontal_line_length = 40;
-    const annotation_connector_offset = 55;
-    const annColor = '#F98E6E';
+  const annGroup = svg.append('g')
+    .attr('transform', `translate(${cent.x}, ${cent.y})`);
+  const annotations = annGroup.selectAll('.donut-slice').data(pie(data));
 
-    const annotationDraws = annotations.enter();
+  const annotationDraws = annotations.enter();
 
+  // Annotation Functions
+  const drawText = () => {
     annotationDraws
       .append('text')
       .text((d: any) => `${d.data.name}: ${d.data.amount}`)
@@ -123,8 +142,10 @@ export function createDonutChart(data: any) {
       })
       .style('text-anchor', 'middle')
       .style('font-size', 14);
+  }
 
-    // draw horizontal lines of annotation lines
+  // draw horizontal lines of annotation lines
+  const drawHorizontalLine = () => {
     annotationDraws
       .append('line')
       .style("stroke", `${annColor}`)
@@ -141,7 +162,10 @@ export function createDonutChart(data: any) {
         return  current_x;
       })
       .attr("y2", (d: any) => arcPath.centroid(d)[1]);
-    // draw connectors
+  }
+
+  // draw annotation line connectors
+  const drawLineConnector = () => {
     annotations.enter()
       .append('line')
       .style("stroke", `${annColor}`)
@@ -173,7 +197,15 @@ export function createDonutChart(data: any) {
           current_y -= annotation_connector_offset}
         return  current_y;
       });
+  }
+  const annFunc = () => {
+    drawText();
+    drawHorizontalLine();
+    drawLineConnector();
+  }
+  // add annotation to the donut chart after pie rendering
+  setTimeout(() => {
+    annFunc();
   }, transition_interval);
-
 
 }

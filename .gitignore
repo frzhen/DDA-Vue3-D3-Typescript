@@ -43,6 +43,12 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
+# for Typescript project
+*.js
+*.js.map
+*.d.ts
+*.tsbuildinfo
+
 # ******************* Python Specific ******************************************
 # Byte-compiled / optimized / DLL files
 __pycache__/
