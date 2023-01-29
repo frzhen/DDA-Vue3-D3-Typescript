@@ -47,7 +47,8 @@ pnpm-lock.yaml
 *.js
 *.js.map
 *.d.ts
-*.tsbuildinfo
+tsconfig.node.tsbuildinfo
+
 
 # ******************* Python Specific ******************************************
 # Byte-compiled / optimized / DLL files
