@@ -44,7 +44,6 @@ async def get_budgets():
     budget_list = []
     cursor = d3.budgets.find()
     async for budget in cursor:
-        print(type(str(budget['_id'])))
         budget_item = {
             'id': str(budget['_id']),
             'name': budget['name'],
