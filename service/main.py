@@ -14,6 +14,7 @@ class ResponseDishModel(BaseModel):
     orders: int = Field(...)
 
 class ResponseBudgetModel(BaseModel):
+    id: str = Field(...)
     name: str = Field(...)
     amount: int = Field(...)
 
@@ -43,7 +44,12 @@ async def get_budgets():
     budget_list = []
     cursor = d3.budgets.find()
     async for budget in cursor:
-        budget_item = { 'name': budget['name'], 'amount': budget['amount']}
+        print(type(str(budget['_id'])))
+        budget_item = {
+            'id': str(budget['_id']),
+            'name': budget['name'],
+            'amount': budget['amount']
+        }
         budget_list.append(budget_item)
     return budget_list
 

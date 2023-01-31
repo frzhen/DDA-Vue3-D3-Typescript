@@ -201,8 +201,16 @@ export function createDonutChart(data: any) {
       .transition('changeSliceFill').duration(500)
       .attr('fill', '#000')
       .attr('stroke', '#41D0F0')
-      .attr('stroke-width', 3)
-      .text('text');
+      .attr('stroke-width', 3);
+
+    // console.log(arcPath.centroid(d.srcElement.attributes.d.value));
+    // svg.append('text')
+    //   .text(d.srcElement.__data__.data.amount)
+    //   .attr('id', 'percentage')
+    //   .attr('x', arcPath.centroid(d.srcElement.attributes.d.value)[0])
+    //   .attr('y', arcPath.centroid(d.srcElement.attributes.d.value)[1])
+    //   .style('fill', '#fff')
+    //   .style('font-size', 16);
   }
 
   const handleMouseOut: any = (d: any) => {
