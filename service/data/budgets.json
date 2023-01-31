@@ -1,18 +1,25 @@
-[
-  {
-    "name": "food",
-    "amount": 600
-  },
-  {
-    "name": "rent",
-    "amount": 1000
-  },
-  {
-    "name": "social",
-    "amount": 300
-  },
-  {
-    "name": "cloth",
-    "amount": 400
-  }
-]
+[{
+  "name": "food",
+  "amount": 600
+},{
+  "name": "rent",
+  "amount": 1000
+},{
+  "name": "social",
+  "amount": 300
+},{
+  "name": "cloth",
+  "amount": 400
+},{
+  "name": "transportation",
+  "amount": 500
+},{
+  "name": "utilities",
+  "amount": 200
+},{
+  "name": "dine-out",
+  "amount": 300
+},{
+  "name": "snacks",
+  "amount": 155
+}]
