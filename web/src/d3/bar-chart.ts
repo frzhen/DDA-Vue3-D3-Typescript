@@ -105,7 +105,7 @@ export function createBarChar(data: any) {
 
   const handleClick: any = (d: any) => {
     svg.append('text')
-      .text(`${d.srcElement.__data__.orders}`)
+      .text(d.srcElement.__data__.orders)
       .attr('class', 'orders')
       .attr('y', parseFloat(d.srcElement.attributes.y.value) + margin.top - 5)
       .attr('x', (parseFloat(d.srcElement.attributes.x.value) + margin.left +
@@ -125,5 +125,4 @@ export function createBarChar(data: any) {
     .on('mouseover', handleMouseOver)
     .on('mouseout', handleMouseOut)
     .on('click', handleClick);
-
 }

@@ -21,6 +21,11 @@ export function createDonutChart(data: any) {
     y: (dims.height /2 + 80 )
   };
 
+  let total = 0;
+  data.forEach((d: any) => {
+      total += d.amount;
+  });
+
   const transition_interval = 1500;
   const svg = d3.select('#donutChart')
     .append('svg')
@@ -51,21 +56,7 @@ export function createDonutChart(data: any) {
     .outerRadius(dims.radius)
     .innerRadius(dims.radius - 50);
 
-  const handleMouseOver: any = (d: any) => {
-    d3.select(d.srcElement)
-      .transition('changeSliceFill').duration(500)
-      .attr('fill', '#000')
-      .attr('stroke', '#41D0F0')
-      .attr('stroke-width', 3);
-  }
 
-  const handleMouseOut: any = (d: any) => {
-    d3.select(d.srcElement)
-      .transition('changeSliceFill').duration(500)
-      .attr('fill', colorRange[d.srcElement.__data__.index])
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 0);
-  }
 
   // custom tween for transition
   const arcTweenEnter: any = (d: any) => {
@@ -105,10 +96,7 @@ export function createDonutChart(data: any) {
     .attrTween('d', arcTweenEnter)
     .attr('class', 'donut-slice');
 
-  // add events
-  graph.selectAll('path')
-    .on('mouseover', handleMouseOver)
-    .on('mouseout', handleMouseOut);
+
 
   const annotation_offset = 80;
   const horizontal_line_length = 50;
@@ -208,4 +196,25 @@ export function createDonutChart(data: any) {
     annFunc();
   }, transition_interval);
 
+  const handleMouseOver: any = (d: any) => {
+    d3.select(d.srcElement)
+      .transition('changeSliceFill').duration(500)
+      .attr('fill', '#000')
+      .attr('stroke', '#41D0F0')
+      .attr('stroke-width', 3)
+      .text('text');
+  }
+
+  const handleMouseOut: any = (d: any) => {
+    d3.select(d.srcElement)
+      .transition('changeSliceFill').duration(500)
+      .attr('fill', colorRange[d.srcElement.__data__.index])
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 0);
+  }
+
+  // add events
+  graph.selectAll('path')
+    .on('mouseover', handleMouseOver)
+    .on('mouseout', handleMouseOut);
 }

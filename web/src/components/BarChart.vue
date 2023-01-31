@@ -21,4 +21,3 @@ onMounted(() => {
   <div id="barChart">
 </div>
 </template>
-
