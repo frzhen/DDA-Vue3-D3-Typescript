@@ -54,7 +54,7 @@ export function createDonutChart(data: any) {
 
   const arcPath: any = d3.arc()
     .outerRadius(dims.radius)
-    .innerRadius(dims.radius - 50);
+    .innerRadius(dims.radius - 70);
 
 
 
@@ -88,6 +88,7 @@ export function createDonutChart(data: any) {
 
   paths.enter()
     .append('path')
+    .attr('id', (d: any) => d.data.id)
     .attr('stroke', '#fff')
     .attr('stroke-width', 0)
     .attr('fill', (d: any)=> arcColor(d.data.name))
@@ -136,6 +137,7 @@ export function createDonutChart(data: any) {
   const drawHorizontalLine = () => {
     annotationDraws
       .append('line')
+      .attr('id', (d: any) => d.data.id)
       .style("stroke", `${annColor}`)
       .style("stroke-width", 1)
       .attr("x1", (d: any) => arcPath.centroid(d)[0])
@@ -198,19 +200,24 @@ export function createDonutChart(data: any) {
 
   const handleMouseOver: any = (d: any) => {
     d3.select(d.srcElement)
-      .transition('changeSliceFill').duration(500)
+      .transition('changeSliceFill').duration(200)
       .attr('fill', '#000')
       .attr('stroke', '#41D0F0')
       .attr('stroke-width', 3);
 
-    // console.log(arcPath.centroid(d.srcElement.attributes.d.value));
-    // svg.append('text')
-    //   .text(d.srcElement.__data__.data.amount)
-    //   .attr('id', 'percentage')
-    //   .attr('x', arcPath.centroid(d.srcElement.attributes.d.value)[0])
-    //   .attr('y', arcPath.centroid(d.srcElement.attributes.d.value)[1])
-    //   .style('fill', '#fff')
-    //   .style('font-size', 16);
+    // console.log(d.srcElement.attributes.id.value);
+    const eleId = d.srcElement.attributes.id.value
+    const matched_line_element = document.querySelectorAll(`[id=${CSS.escape(eleId)}]`)[1];
+    // console.log(matched_line_element.attributes[1]);
+    const percent = (parseFloat(d.srcElement.__data__.data.amount) / total * 100).toFixed(2)
+    annGroup.append('text')
+      .text(`${percent} %`)
+      .attr('id', 'percentage')
+      .attr('x', parseFloat(matched_line_element.attributes[1].value) - 20)
+      .attr('y',parseFloat(matched_line_element.attributes[2].value))
+      .style('fill', '#fff')
+      .style('font-size', 16)
+      .style('font-weight', 'bold');
   }
 
   const handleMouseOut: any = (d: any) => {
@@ -219,6 +226,8 @@ export function createDonutChart(data: any) {
       .attr('fill', colorRange[d.srcElement.__data__.index])
       .attr('stroke', '#fff')
       .attr('stroke-width', 0);
+
+    annGroup.select('#percentage').remove();
   }
 
   // add events
