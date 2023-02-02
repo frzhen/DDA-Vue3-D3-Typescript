@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h3>Dishes Bar Chart</h3>
+  <h3 class="is-size-3">Dishes Bar Chart</h3>
   <div id="barChart">
 </div>
 </template>

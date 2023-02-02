@@ -6,6 +6,7 @@
 <script lang="ts" setup>
 import BarChart from "../components/BarChart.vue";
 import DonutChart from "../components/DonutChart.vue";
+import LineGraphs from "../components/LineGraphs.vue";
 
 
 </script>
@@ -18,6 +19,11 @@ import DonutChart from "../components/DonutChart.vue";
       </div>
       <div class="column">
         <DonutChart />
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <LineGraphs />
       </div>
     </div>
   </div>
