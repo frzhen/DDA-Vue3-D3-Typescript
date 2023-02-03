@@ -4,9 +4,14 @@
   * @Email: fred.zhen@gmail.com
 -->
 <script lang="ts" setup>
-import { ref } from "vue";
+import { useFitness } from "../store/fitness";
+import {onMounted} from "vue";
 
-const fitnessType = ref('Cycling');
+const fitnessStore = useFitness();
+
+const handleClick = (event: any) => {
+  fitnessStore.updateIsActive(event.target.innerText);
+}
 
 </script>
 
@@ -15,30 +20,24 @@ const fitnessType = ref('Cycling');
     <h2 class="is-size-2"> Line Graphs </h2>
     <div class="columns">
       <div id="line-graph-selector" class="column is-one-third">
-        <div class="columns">
-          <button class="button is-info my-1">Cycling</button>
+        <div v-for="d in fitnessStore.data" :key=d.activityName class="columns">
+          <button class="button my-1"
+                  :class="{
+            'is-info': d.isActive,
+            'is-light': !d.isActive
+          }"
+                  @click.prevent="handleClick"
+          >{{ d.activityName }}</button>
         </div>
-        <div class="columns">
-          <button class="button is-info my-1">Running</button>
-        </div>
-        <div class="columns">
-          <button class="button is-info my-1">Swimming</button>
-        </div>
-        <div class="columns">
-          <button class="button is-info my-1">Walking</button>
-        </div>
-
-
-
       </div>
       <div  class="column">
         <div class="box">
           <h3 class="is-size-3">Fitness Tracker</h3>
-          <div class="field is-grouped is-grouped-multiline">
+          <div class="field is-grouped is-grouped-multiline is-justify-content-center">
             <div class="control">
               <div class="tags has-addons">
-                <span class="tag is-dark">Type</span>
-                <span class="tag is-success">{{ fitnessType }}</span>
+                <span class="tag is-grey">Fitness Type</span>
+                <span class="tag is-success">{{ fitnessStore.currentActivity }}</span>
               </div>
             </div>
           </div>
