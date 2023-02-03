@@ -33,7 +33,7 @@ export const useFitness = defineStore("fitnessData", {
       const res = await axios.get('/api/fitness');
       let activities = res.data;
       activities.forEach((activity: any) => {
-        console.log(activity.date);
+        activity.date =new  Date(activity.date);
       })
       return activities;
     },

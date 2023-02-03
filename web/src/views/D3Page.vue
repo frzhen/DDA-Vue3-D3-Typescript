@@ -21,6 +21,7 @@ import LineGraphs from "../components/LineGraphs.vue";
         <DonutChart />
       </div>
     </div>
+    <hr>
     <div class="columns">
       <div class="column">
         <LineGraphs />

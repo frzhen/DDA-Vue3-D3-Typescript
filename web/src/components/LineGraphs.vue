@@ -20,7 +20,7 @@ const handleClick = (event: any) => {
 
 <template>
   <div class="container">
-    <h2 class="is-size-2"> Line Graphs </h2>
+    <h2 class="is-size-2 mb-4"> Fitness Tracker </h2>
     <div class="columns">
       <div id="line-graph-selector" class="column is-one-third">
         <div v-for="d in fitnessStore.data" :key=d.activityName class="columns">
@@ -35,7 +35,7 @@ const handleClick = (event: any) => {
       </div>
       <div  class="column">
         <div class="box">
-          <h3 class="is-size-3">Fitness Tracker</h3>
+          <h3 class="is-size-3">Line Graphs</h3>
           <div class="field is-grouped is-grouped-multiline is-justify-content-center">
             <div class="control">
               <div class="tags has-addons">
