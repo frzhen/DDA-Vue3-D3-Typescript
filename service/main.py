@@ -62,3 +62,18 @@ async def create_a_budget(budget: CreateBudgetSchema = Body(...)):
     new_budget = await d3.budgets.find_one({"_id": result.inserted_id})
     return {"status_code": 200, "name": new_budget["name"], "message": "budget added"}
 
+
+@app.get('/fitness')
+async def get_fitness_data():
+    fitness_data = []
+    cursor = d3.fitness.find()
+    async for activity in cursor:
+        activity_item = {
+            'id': str(activity['_id']),
+            'activity': activity['activity'],
+            'date': activity['date'],
+            'distance': activity['distance'],
+            'unit': activity['unit']
+        }
+        fitness_data.append(activity_item)
+    return fitness_data
