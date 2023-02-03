@@ -10,14 +10,16 @@ const highlightColor = '#41D0F0';
 const textColor = '#323D5E';
 const orderLabelColor = "#28AE60";
 export function createBarChar(data: any) {
+  const boxWidth = 600;
+  const boxHeight = 600;
   const svg = d3.select('#barChart')
     .append('svg')
-    .attr('width', 600)
-    .attr('height', 600);
+    .attr('width', boxWidth)
+    .attr('height', boxHeight);
 
   const margin = { top: 20, right: 20, bottom: 100, left: 100 };
-  const graphWidth = 600 - margin.left - margin.right;
-  const graphHeight = 600 - margin.top - margin.bottom;
+  const graphWidth = boxWidth - margin.left - margin.right;
+  const graphHeight = boxHeight - margin.top - margin.bottom;
 
   const graph = svg.append('g')
     .attr('width', graphWidth)

@@ -31,7 +31,11 @@ export const useFitness = defineStore("fitnessData", {
   actions: {
     async get_fitness_data() {
       const res = await axios.get('/api/fitness');
-      return res.data;
+      let activities = res.data;
+      activities.forEach((activity: any) => {
+        console.log(activity.date);
+      })
+      return activities;
     },
     updateIsActive(buttonName: string) {
       this.data.forEach((d: any) => d.isActive = d.activityName == buttonName);
