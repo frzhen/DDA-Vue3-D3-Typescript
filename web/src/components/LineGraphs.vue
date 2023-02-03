@@ -9,6 +9,9 @@ import {onMounted} from "vue";
 
 const fitnessStore = useFitness();
 
+onMounted(() => {
+  fitnessStore.get_fitness_data();
+})
 const handleClick = (event: any) => {
   fitnessStore.updateIsActive(event.target.innerText);
 }

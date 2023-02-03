@@ -6,10 +6,6 @@
 import { defineStore } from 'pinia';
 import axios from "axios";
 
-interface FitnessData{
-  activityName: string,
-  isActive: boolean
-}
 export const useFitness = defineStore("fitnessData", {
   state: () => ({
     data: [
@@ -33,8 +29,12 @@ export const useFitness = defineStore("fitnessData", {
     currentActivity: 'Cycling'
   }),
   actions: {
+    async get_fitness_data() {
+      const res = await axios.get('/api/fitness');
+      return res.data;
+    },
     updateIsActive(buttonName: string) {
-      this.data.forEach((d: FitnessData) => d.isActive = d.activityName == buttonName);
+      this.data.forEach((d: any) => d.isActive = d.activityName == buttonName);
       this.currentActivity = buttonName;
     }
   },

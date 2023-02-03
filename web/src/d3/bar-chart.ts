@@ -38,7 +38,7 @@ export function createBarChar(data: any) {
 
   // band scales
   const x_scale = d3.scaleBand()
-    .domain(data.map((item: { name: any }) => item.activityName))
+    .domain(data.map((item: { name: any }) => item.name))
     .range([0, 500])
     .paddingInner(0.3)
     .paddingOuter(0.2);
