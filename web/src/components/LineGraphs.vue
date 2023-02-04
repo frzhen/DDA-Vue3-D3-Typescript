@@ -5,15 +5,33 @@
 -->
 <script lang="ts" setup>
 import { useFitness } from "../store/fitness";
-import {onMounted} from "vue";
+import { onMounted } from "vue";
+import { createGraph, updateGraph } from "../d3/line-chart";
 
 const fitnessStore = useFitness();
 
 onMounted(() => {
-  fitnessStore.get_fitness_data();
+  fitnessStore
+    .get_current_activity_data()
+    .then((d: any) => {
+      fitnessStore.graphItems = createGraph();
+      updateGraph(d, fitnessStore.graphItems, fitnessStore.linePathFill);
+      }
+    );
 })
 const handleClick = (event: any) => {
+
   fitnessStore.updateIsActive(event.target.innerText);
+  fitnessStore
+    .get_current_activity_data()
+    .then((d: any) => updateGraph(d, fitnessStore.graphItems, fitnessStore.linePathFill));
+}
+
+const handlePathFill = () => {
+  fitnessStore.togglePathFill();
+  fitnessStore
+    .get_current_activity_data()
+    .then((d: any) => updateGraph(d, fitnessStore.graphItems, fitnessStore.linePathFill));
 }
 
 </script>
@@ -31,6 +49,11 @@ const handleClick = (event: any) => {
           }"
                   @click.prevent="handleClick"
           >{{ d.activityName }}</button>
+        </div>
+        <div class="columns">
+          <button class="button mt-6 is-warning" @click.prevent="handlePathFill">
+            {{ fitnessStore.linePathType }}
+          </button>
         </div>
       </div>
       <div  class="column">
