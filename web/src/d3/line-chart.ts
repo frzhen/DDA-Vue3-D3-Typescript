@@ -70,6 +70,8 @@ export function createGraph() {
   const linePath = graph.append('path');
 
   return {
+    margin: margin,
+    svg: svg,
     graph: graph,
     xScale: xScale,
     yScale: yScale,
@@ -82,8 +84,9 @@ export function createGraph() {
   };
 }
 
-
 export function updateGraph(data: any, graphItems: any, linePathFill: string) {
+  const margin = graphItems.margin;
+  const svg = graphItems.svg;
   const graph = graphItems.graph;
   const xScale = graphItems.xScale;
   const yScale = graphItems.yScale;
@@ -155,10 +158,44 @@ export function updateGraph(data: any, graphItems: any, linePathFill: string) {
   // add new circles
   circles.enter()
     .append('circle')
+    .attr('class', 'data-point')
     .attr('r', 4)
     .attr('cx', (d: any) => xScale(new Date(d.date)))
     .attr('cy', (d :any) => yScale(d.distance))
     .attr('fill', '#E281EC');
 
   circles.exit().remove();
+
+
+
+  const handleMouseOver = (d: any) => {
+
+    d3.select(d.srcElement)
+      .transition('dataPointZoomIn').duration(100)
+      .attr('r', 10)
+      .attr('fill', '#CE4852');
+
+    svg.append('text')
+      .text(d.srcElement.__data__.distance)
+      .attr('class', 'zoomText')
+      .attr('y', parseFloat(d.srcElement.attributes.cy.value) + margin.top - 15)
+      .attr('x', parseFloat(d.srcElement.attributes.cx.value) + margin.left)
+      .attr('text-anchor', 'middle')
+      .style('fill', '#CE4852')
+      .style('font-size', 16)
+      .on('mouseout', (d: any) => {
+        d3.select(d.srcElement).remove()
+      });
+  }
+  const handleMouseOut =  (d: any) => {
+    d3.select(d.srcElement)
+      .transition('dataPointZoomOut').duration(100)
+      .attr('r', 4)
+      .attr('fill', '#E281EC');
+
+    svg.select('.zoomText').remove();
+  }
+    graph.selectAll('.data-point')
+    .on('mouseover', handleMouseOver)
+    .on('mouseout', handleMouseOut);
 }
