@@ -98,33 +98,26 @@ export function createBarChar(data: any) {
   const handleMouseOver: any = (d: any) => {
     d3.select(d.srcElement)
       .attr('fill', highlightColor);
-  }
 
-  const handleMouseOut: any = (d: any) => {
-    d3.select(d.srcElement)
-      .attr('fill', barColor);
-  }
-
-  const handleClick: any = (d: any) => {
     svg.append('text')
       .text(d.srcElement.__data__.orders)
       .attr('class', 'orders')
       .attr('y', parseFloat(d.srcElement.attributes.y.value) + margin.top - 5)
       .attr('x', (parseFloat(d.srcElement.attributes.x.value) + margin.left +
-          parseFloat(d.srcElement.attributes.width.value) / 2))
+        parseFloat(d.srcElement.attributes.width.value) / 2))
       .attr('text-anchor', 'middle')
       .style('fill', orderLabelColor)
-      .style('font-size', 16)
-      .on('click', handleLabel);
+      .style('font-size', 16);
   }
 
-  const handleLabel: any = (d: any) => {
-    d3.select(d.srcElement).remove();
+  const handleMouseOut: any = (d: any) => {
+    d3.select(d.srcElement)
+      .attr('fill', barColor);
+    svg.select('.orders').remove();
   }
 
   // add events
   graph.selectAll('rect')
     .on('mouseover', handleMouseOver)
-    .on('mouseout', handleMouseOut)
-    .on('click', handleClick);
+    .on('mouseout', handleMouseOut);
 }
