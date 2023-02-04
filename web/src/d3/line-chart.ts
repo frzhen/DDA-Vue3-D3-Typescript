@@ -84,7 +84,7 @@ export function createGraph() {
   };
 }
 
-export function updateGraph(data: any, graphItems: any, linePathFill: string) {
+export function updateGraph(data: any, graphItems: any) {
   const margin = graphItems.margin;
   const svg = graphItems.svg;
   const graph = graphItems.graph;
@@ -140,7 +140,7 @@ export function updateGraph(data: any, graphItems: any, linePathFill: string) {
 
   // plot line path
   linePath.data([data])
-    .attr('fill', linePathFill)
+    .attr('fill', 'none')
     .attr('stroke', '#41D0F0')
     .attr('stroke-width', 2)
     .attr('d', line);
@@ -169,23 +169,44 @@ export function updateGraph(data: any, graphItems: any, linePathFill: string) {
 
 
   const handleMouseOver = (d: any) => {
-
     d3.select(d.srcElement)
       .transition('dataPointZoomIn').duration(100)
       .attr('r', 10)
       .attr('fill', '#CE4852');
 
+    const ox = parseFloat(d.srcElement.attributes.cx.value);
+    const oy = parseFloat(d.srcElement.attributes.cy.value);
+    const distance = d.srcElement.__data__.distance;
+
     svg.append('text')
-      .text(d.srcElement.__data__.distance)
+      .text(distance)
       .attr('class', 'zoomText')
-      .attr('y', parseFloat(d.srcElement.attributes.cy.value) + margin.top - 15)
-      .attr('x', parseFloat(d.srcElement.attributes.cx.value) + margin.left)
+      .attr('y', oy + margin.top - 15)
+      .attr('x', ox + margin.left)
       .attr('text-anchor', 'middle')
       .style('fill', '#CE4852')
-      .style('font-size', 16)
-      .on('mouseout', (d: any) => {
-        d3.select(d.srcElement).remove()
-      });
+      .style('font-size', 16);
+
+    svg.append('line')
+      .attr('class', 'xDashLine')
+      .attr('stroke-dasharray', 2)
+      .attr('stoke-width', 1)
+      .attr('stroke', '#FC8C3C')
+      .attr('x1', ox + margin.left)
+      .attr('y1', oy + margin.top)
+      .attr('x2', margin.left)
+      .attr('y2', oy + margin.top);
+
+    svg.append('line')
+      .attr('class', 'yDashLine')
+      .attr('stroke-dasharray', 2)
+      .attr('stoke-width', 1)
+      .attr('stroke','#FC8C3C')
+      .attr('x1', ox + margin.left)
+      .attr('y1',oy + margin.top)
+      .attr('x2', ox + margin.left)
+      .attr('y2', 510 + margin.top);
+
   }
   const handleMouseOut =  (d: any) => {
     d3.select(d.srcElement)
@@ -194,6 +215,8 @@ export function updateGraph(data: any, graphItems: any, linePathFill: string) {
       .attr('fill', '#E281EC');
 
     svg.select('.zoomText').remove();
+    svg.select('.xDashLine').remove();
+    svg.select('.yDashLine').remove();
   }
     graph.selectAll('.data-point')
     .on('mouseover', handleMouseOver)

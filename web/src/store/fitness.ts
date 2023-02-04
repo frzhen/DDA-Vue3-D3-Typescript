@@ -27,9 +27,7 @@ export const useFitness = defineStore("fitnessData", {
       }
     ],
     currentActivity: 'Cycling',
-    graphItems: {},
-    linePathType: 'Fill the path',
-    linePathFill: 'none'
+    graphItems: {}
   }),
   actions: {
     async get_fitness_data() {
@@ -50,15 +48,6 @@ export const useFitness = defineStore("fitnessData", {
     updateIsActive(buttonName: string) {
       this.data.forEach((d: any) => d.isActive = d.activityName == buttonName);
       this.currentActivity = buttonName;
-    },
-    togglePathFill() {
-      if (this.linePathFill == 'none') {
-        this.linePathType = "Don't fill the path";
-        this.linePathFill = '#41D0F0';
-      } else {
-        this.linePathType = "Fill the path";
-        this.linePathFill = 'none';
-      }
     }
   },
 });
