@@ -14,7 +14,7 @@ DDA-Vue3-D3-Typescript
 > A fully working project will have have the data stored in mongoDB, accessible through API built with the python FastAPI framework. All code is only worked in local environment so far.
 
 ### DEMO Video
-![D3 graphic demo](https://user-images.githubusercontent.com/12046633/216779187-dfc826d4-91a2-453f-8937-49fd02f4ea24.mp4)
+<video src="https://user-images.githubusercontent.com/12046633/216779187-dfc826d4-91a2-453f-8937-49fd02f4ea24.mp4" controls="controls" style="max-width: 730px;"></video>
 
 
 
