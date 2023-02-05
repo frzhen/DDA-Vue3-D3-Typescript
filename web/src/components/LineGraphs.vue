@@ -30,12 +30,12 @@ const handleClick = (event: any) => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="box">
     <h2 class="is-size-2 mb-4"> Fitness Tracker </h2>
     <div class="columns">
-      <div id="line-graph-selector" class="column is-one-third">
+      <div id="line-graph-selector" class="column is-one-quarter">
         <div v-for="d in fitnessStore.data" :key=d.activityName class="columns">
-          <button class="button my-1"
+          <button class="button column mx-6 my-2 p-1"
                   :class="{
             'is-info': d.isActive,
             'is-light': !d.isActive
@@ -67,7 +67,4 @@ const handleClick = (event: any) => {
 </template>
 
 <style lang='scss' scoped>
-.button {
-  width: 200px;
-}
 </style>

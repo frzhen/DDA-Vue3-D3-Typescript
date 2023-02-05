@@ -8,7 +8,7 @@ import * as d3 from "d3";
 const barColor = '#FC8C3C';
 const highlightColor = '#41D0F0';
 const textColor = '#323D5E';
-const orderLabelColor = "#28AE60";
+const orderLabelColor = '#28AE60';
 export function createBarChar(data: any) {
   const boxWidth = 600;
   const boxHeight = 600;

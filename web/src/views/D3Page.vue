@@ -7,6 +7,7 @@
 import BarChart from "../components/BarChart.vue";
 import DonutChart from "../components/DonutChart.vue";
 import LineGraphs from "../components/LineGraphs.vue";
+import CirclePackingGraph from "../components/CirclePackingGraph.vue";
 
 
 </script>
@@ -25,6 +26,11 @@ import LineGraphs from "../components/LineGraphs.vue";
     <div class="columns">
       <div class="column">
         <LineGraphs />
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <CirclePackingGraph />
       </div>
     </div>
   </div>
