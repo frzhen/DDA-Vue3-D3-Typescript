@@ -44,6 +44,7 @@ export function updateGraph(data: any, graphItems: any) {
   // initialize by remove node and link
   graph.selectAll('.node').remove();
   graph.selectAll('.link').remove();
+  graph.selectAll('.label').remove();
 
 
 
@@ -57,7 +58,6 @@ export function updateGraph(data: any, graphItems: any) {
 
   const links = graph.selectAll('.link')
     .data(treeData.links());
-
 
   links.enter()
     .append('path')
@@ -93,7 +93,7 @@ export function updateGraph(data: any, graphItems: any) {
     .style('font-size', 14);
 
   // filter out none department nodes
-  // console.log(treeDataArray);
+
   const deptData = treeDataArray.filter((d: any) => {
    if ( d.depth == 1) {
      return d
