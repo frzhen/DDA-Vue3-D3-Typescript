@@ -8,6 +8,7 @@ import BarChart from "../components/BarChart.vue";
 import DonutChart from "../components/DonutChart.vue";
 import LineGraphs from "../components/LineGraphs.vue";
 import CirclePackingGraph from "../components/CirclePackingGraph.vue";
+import OrgTree from "../components/OrgTree.vue";
 
 
 </script>
@@ -31,6 +32,11 @@ import CirclePackingGraph from "../components/CirclePackingGraph.vue";
     <div class="columns">
       <div class="column">
         <CirclePackingGraph />
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <OrgTree />
       </div>
     </div>
   </div>

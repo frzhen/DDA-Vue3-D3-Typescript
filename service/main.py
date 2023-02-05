@@ -104,4 +104,4 @@ async def get_org_structure_data():
     async for org_item in cursor:
         del org_item['_id']
         org_data.append(org_item)
-    return org_data
+    return org_data[0]

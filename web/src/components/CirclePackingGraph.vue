@@ -9,12 +9,13 @@ import {useStratify} from "../store/stratify";
 import { onMounted } from "vue";
 import { createGraph, updateGraph } from "../d3/circle-packing";
 
+
 const stratifyStore = useStratify();
 
 onMounted( () => {
   stratifyStore.get_stratify_data().then((d: any) => {
-    const graphItems = createGraph();
-    updateGraph(d, graphItems);
+    stratifyStore.graphItems = createGraph();
+    updateGraph(d, stratifyStore.graphItems);
   });
 
 })

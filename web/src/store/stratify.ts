@@ -8,7 +8,7 @@ import axios from "axios";
 
 export const useStratify = defineStore('stratify', {
   state: () => ({
-    data: []
+    graphItems: {}
   }),
   actions: {
     async get_stratify_data() {
