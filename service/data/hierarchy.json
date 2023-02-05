@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Elon",
+    "department": "CEO",
+    "parent": "",
+    "children": [
+      {
+        "name": "John",
+        "department": "IT",
+        "parent": "Elon",
+        "children": [
+          {
+            "name": "Kevin",
+            "department": "R&D",
+            "parent": "John",
+            "children": [
+              {
+                "name": "Jose",
+                "department": "R&D",
+                "parent": "Kevin"
+              },
+              {
+                "name": "Lucy",
+                "department": "R&D",
+                "parent": "Kevin"
+              },
+              {
+                "name": "Alex",
+                "department": "R&D",
+                "parent": "Kevin"
+              }
+            ]
+          },
+          {
+            "name": "Josephine",
+            "department": "IT Operation",
+            "parent": "John",
+            "children": [
+              {
+                "name": "Martha",
+                "department": "IT Operation",
+                "parent": "Josephine"
+              },
+              {
+                "name": "Sanchez",
+                "department": "IT Operation",
+                "parent": "Josephine"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "McKingly",
+        "department": "Marketing",
+        "parent": "Elon",
+        "children": [
+          {
+            "name": "Mindy",
+            "department": "Marketing",
+            "parent": "McKingly"
+          },
+          {
+            "name": "Elaine",
+            "department": "Marketing",
+            "parent": "McKingly"
+          },
+          {
+            "name": "Rebecca",
+            "department": "Marketing",
+            "parent": "McKingly"
+          }
+        ]
+      },
+      {
+        "name": "Moses",
+        "department": "Accounting",
+        "parent": "Elon",
+        "children": [
+          {
+            "name": "Katherine",
+            "department": "Accounting",
+            "parent": "Moses"
+          },
+          {
+            "name": "Frank",
+            "department": "Accounting",
+            "parent": "Moses"
+          }
+        ]
+      },
+      {
+        "name": "Christ",
+        "department": "HR",
+        "parent": "Elon",
+        "children": [
+          {
+            "name": "Helen",
+            "department": "HR",
+            "parent": "Christ"
+          },
+          {
+            "name": "Hugo",
+            "department": "HR",
+            "parent": "Christ"
+          }
+        ]
+      },
+      {
+        "name": "Fredrik",
+        "department": "Sales",
+        "parent": "Elon",
+        "children": [
+          {
+            "name": "Jacky",
+            "department": "Sales",
+            "parent": "Fredrik"
+          },
+          {
+            "name": "Jim",
+            "department": "Sales",
+            "parent": "Fredrik"
+          }
+        ]
+      }
+    ]
+  }
+]

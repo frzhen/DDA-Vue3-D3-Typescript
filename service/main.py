@@ -96,3 +96,12 @@ async def get_stratify_data():
             }
         stratify_data.append(node_item)
     return stratify_data
+
+@app.get('/org')
+async def get_org_structure_data():
+    org_data = []
+    cursor = d3.hierarchy.find()
+    async for org_item in cursor:
+        del org_item['_id']
+        org_data.append(org_item)
+    return org_data
