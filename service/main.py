@@ -77,3 +77,22 @@ async def get_fitness_data():
         }
         fitness_data.append(activity_item)
     return fitness_data
+
+@app.get('/stratify')
+async def get_stratify_data():
+    stratify_data = []
+    cursor = d3.stratify.find()
+    async for node in cursor:
+        try:
+            node_item = {
+                'name': node['name'],
+                'parent': node['parent'],
+                'amount': node['amount']
+            }
+        except KeyError:
+            node_item = {
+                'name': node['name'],
+                'parent': node['parent'],
+            }
+        stratify_data.append(node_item)
+    return stratify_data

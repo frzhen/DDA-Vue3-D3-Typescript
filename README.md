@@ -15,6 +15,3 @@ DDA-Vue3-D3-Typescript
 
 ### DEMO Video
 <video src="https://user-images.githubusercontent.com/12046633/216779187-dfc826d4-91a2-453f-8937-49fd02f4ea24.mp4" controls="controls" style="max-width: 730px;"></video>
-
-
-
